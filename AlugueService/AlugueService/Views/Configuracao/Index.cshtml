@@ -1,0 +1,85 @@
+﻿@model AlugueService.Models.Configuracao
+@using System.Globalization
+
+@{ 
+    //string contrato = ViewBag.configuracao.contrato;
+    //string contratoFormatado = contrato.Replace("&lt;", "<").Replace("&gt;", ">").Replace("&amp;", "&").Replace("&#59;", ";").Replace("&#47;", "/");
+}
+
+@*@section Scripts
+{
+    <script src="~/Content/AdminLTE/plugins/ckeditor/ckeditor.js"></script>
+
+    <script type="text/javascript">
+        if (CKEDITOR.instances.editorContrato) {
+            CKEDITOR.remove(CKEDITOR.instances.editorContrato);
+        }
+        CKEDITOR.replace('editorContrato', { htmlEncodeOutput: true });
+        CKEDITOR.instances['editorContrato'].setData('@ViewBag.configuracao.contrato');
+    </script>
+
+}*@
+
+
+@{
+    ViewBag.Title = "Configuração";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var multaFormatado = string.Format("{0:N}", ViewBag.configuracao.multa);
+    var cupomFormatado = string.Format("{0:N}", ViewBag.configuracao.cupom);
+}
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-11">
+            <!-- general form elements -->
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <span class="fa fa-gear"></span>
+                    <div class="pull-right">
+                        <h2 class="box-title">ID: <i>#@ViewBag.configuracao.idConfiguracao</i></h2>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Valor da multa:")
+                                <div class="input-group">
+                                    <div class="input-group-addon">R$</div>
+                                    @Html.TextBoxFor(m => m.multa, new { @class = "form-control", id = "inputMulta", type = "text", maxlength = "6", required = "required", @Value = multaFormatado })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Valor do cupom:")
+                                <div class="input-group">
+                                    <div class="input-group-addon">R$</div>
+                                    @Html.TextBoxFor(m => m.cupom, new { @class = "form-control", id = "inputCupom", type = "text", maxlength = "6", required = "required", @Value = cupomFormatado })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row">
+                        <div class="col-lg-12">
+                            @Html.Label("Contrato:") 944 CARACTERES VAI, MENOS QUE ISSO NAO
+                            @Html.TextAreaFor(m => m.contrato, new { @class = "form-control", id = "editorContrato", cols = "40", rows = "5", maxlength = "1000", style = "height:180px;resize:none;float:right", required = "required"})
+                            @*http://www.scriptiny.com/2010/02/javascript-wysiwyg-editor/
+                            @*https://www.tinymce.com/
+                            @*http://www.freetextbox.com/
+                            @ViewBag.configuracao.contrato
+                        </div>
+                    </div>*@
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Cadastrar&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-save"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

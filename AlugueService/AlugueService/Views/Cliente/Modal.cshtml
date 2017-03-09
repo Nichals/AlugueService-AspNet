@@ -1,0 +1,75 @@
+﻿@model AlugueService.Models.Cliente
+@using System.Globalization;
+@using AlugueService.Util
+
+@{
+    string cStatus;
+    if (ViewBag.cliente.status == 1)
+    {
+        cStatus = "Ativo";
+    }
+    else
+    {
+        cStatus = "Inativo";
+    }
+
+    Utilitaria util = new Utilitaria();
+
+    ViewBag.cliente.nome = util.DesnormalizarString(ViewBag.cliente.nome);
+
+    CultureInfo cult = new CultureInfo("pt-BR");
+
+    DateTime dataCriacao = new DateTime(ViewBag.cliente.dataCriacao);
+    DateTime dataNascimento = new DateTime(ViewBag.cliente.dataNascimento);
+
+    string dataCri = dataCriacao.ToString("dd/MM/yyyy", cult);
+    string dataNasc = dataNascimento.ToString("dd/MM/yyyy", cult);
+
+}
+
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">Informações do cliente @ViewBag.cliente.nome <label class="pull-right">ID #@ViewBag.cliente.idCliente</label></h4>
+</div>
+
+<div class="modal-body">
+    <center><label>Status: @cStatus</label></center>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_pessoal" data-toggle="tab">Pessoal</a></li>
+            <li><a href="#tab_contato" data-toggle="tab">Contato</a></li>
+            <li><a href="#tab_endereco" data-toggle="tab">Endereço</a></li>
+            <li><a href="#tab_adm" data-toggle="tab">Administrativas</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_pessoal">
+                <p>Nome: @ViewBag.cliente.nome @ViewBag.cliente.sobrenome</p>
+                <p>CPF: @ViewBag.cliente.cpf</p>
+                <p>Data de nascimento: @dataNasc</p>
+            </div>
+            <div class="tab-pane" id="tab_contato">
+                <p>Telefone: @ViewBag.cliente.telefone</p>
+                <p>Celular: @ViewBag.cliente.celular</p>
+                <p>Email: @ViewBag.cliente.email</p>
+            </div>
+            <div class="tab-pane" id="tab_endereco">
+                <p>Rua: @ViewBag.cliente.endereco.rua</p>
+                <p>Número: @ViewBag.cliente.endereco.numero</p>
+                <p>Bairro: @ViewBag.cliente.endereco.bairro</p>
+                <p>Cidade: @ViewBag.cliente.endereco.cidade</p>
+                <p>CEP: @ViewBag.cliente.endereco.cep</p>
+            </div>
+            <div class="tab-pane" id="tab_adm">
+                <p>Data da criação: @dataCri</p>
+                <p><b>Operador criador</b></p>
+                <p>ID: @ViewBag.cliente.operadorCriador</p>
+                <p>Nome: </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Fechar</button>
+</div>

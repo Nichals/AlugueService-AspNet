@@ -1,0 +1,181 @@
+﻿@model AlugueService.Models.Produto
+@using System.Globalization
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> listTamanho = new List<SelectListItem>();
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "PP",
+        Value = "PP"
+    });
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "P",
+        Value = "P",
+    });
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "M",
+        Value = "M"
+    });
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "G",
+        Value = "G",
+    });
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "GG",
+        Value = "GG"
+    });
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "ÚNICO",
+        Value = "UNICO",
+    });
+
+    List<SelectListItem> listGenero = new List<SelectListItem>();
+    listGenero.Add(new SelectListItem
+    {
+        Text = "M",
+        Value = "M"
+    });
+    listGenero.Add(new SelectListItem
+    {
+        Text = "F",
+        Value = "F",
+    });
+    listGenero.Add(new SelectListItem
+    {
+        Text = "U",
+        Value = "U"
+    });
+
+    List<SelectListItem> listStatus = new List<SelectListItem>();
+    listStatus.Add(new SelectListItem
+    {
+        Text = "Ativo",
+        Value = "1"
+    });
+    listStatus.Add(new SelectListItem
+    {
+        Text = "Inativo",
+        Value = "0",
+    });
+    //listStatus.Add(new SelectListItem
+    //{
+    //    Text = "Alugado",
+    //    Value = "2",
+    //});
+    //listStatus.Add(new SelectListItem
+    //{
+    //    Text = "Pré-alugado",
+    //    Value = "3",
+    //});
+    //listStatus.Add(new SelectListItem
+    //{
+    //    Text = "Manutenção",
+    //    Value = "4",
+    //});
+    //listStatus.Add(new SelectListItem
+    //{
+    //    Text = "Lavagem",
+    //    Value = "5",
+    //});
+
+    var valorFormatado = string.Format("{0:N}", Model.valor);
+
+}
+
+
+@using (Html.BeginForm())
+{
+
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-11">
+            <!-- general form elements -->
+            <div class="box box-danger">
+                <div class="box-body">
+                    <div class="form-group">
+                        @Html.Label("Status:")
+                        @Html.DropDownListFor(m => m.status, listStatus, new { @class = "form-control", id = "inputStatus", required = "required" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-11">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <div class="col-xs-5">
+                        <div class="form-group">
+                            @Html.Label("Nome:")
+                            @Html.TextBoxFor(m => m.nome, new { @class = "form-control", id = "inputNome", maxlength = "30", minlenght = "2", required = "required", pattern = @"^([A-zÀ-ú]+(_[A-zÀ-ú]+)*)(\s([A-zÀ-ú]+(_[A-zÀ-ú]+)*))*$", @title = "Nome do produto de 2 à 30 caracteres, não são aceitos números e caracteres especiais" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Tamanho:")
+                                    @Html.DropDownListFor(m => m.tamanho, listTamanho, "Selecione", new { @class = "form-control", id = "inputTamanho", required = "required" })
+                                </div>
+                                <!-- /input-group -->
+                            </div>
+                            <!-- /.col-lg-6 -->
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Gênero:")
+                                    @Html.DropDownListFor(m => m.genero, listGenero, "Selecione", new { @class = "form-control", id = "inputGenero", required = "required" })
+                                </div>
+                                <!-- /input-group -->
+                            </div>
+                            <!-- /.col-lg-6 -->
+                        </div>
+                        <!-- /.row -->
+
+
+                        <div class="input-group col-xs-12">
+                            @Html.Label("Preço:")
+                            <div class="input-group">
+                                <div class="input-group-addon">R$</div>
+                                @*<input type="text" class="form-control" id="inputPreco" required maxlength="10" style="float:left">*@
+                                @Html.TextBoxFor(m => m.valor, new { @class = "form-control", id = "inputPreco", type = "text", maxlength = "10", required = "required", @Value = valorFormatado })
+                            </div>
+                        </div>
+
+                        @*Input para imagem (retirado)*@
+                        @*<div class="form-group" style="float:left">
+                                <label>
+                                    <input type="checkbox" style="float:left" onclick="var input = document.getElementById('inputFile'); if (this.checked) { input.disabled = false; input.focus(); } else { input.disabled = true; }" /> Produto tem imagem?
+                                </label>
+                                <input type="file" id="inputFile" name="inputFile" accept="image/*" disabled="disabled">
+                                <p class="help-block">Somente uma imagem por produto</p>
+                            </div>*@
+
+                    </div>
+                    <div class="form-group col-xs-7">
+                        @Html.Label("Descrição:")
+                        @Html.TextAreaFor(m => m.descricao, new { @class = "form-control", id = "inputDescricao", cols = "40", rows = "5", maxlength = "1000", style = "height:180px;resize:none;float:right", placeholder = "Campo de preenchimento não obrigatório" })
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Salvar&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-save"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar para a consulta", "Consulta")
+</div>

@@ -1,0 +1,80 @@
+﻿@model AlugueService.Models.Operador
+@using System.Globalization;
+
+@{ 
+    string NivelOp;
+    if (ViewBag.operador.nivel == 1)
+    {
+        NivelOp = "Administrador";
+    }
+    else
+    {
+        NivelOp = "Atendente";
+    }
+    string oStatus;
+    if (ViewBag.operador.status == 1)
+    {
+        oStatus = "Ativo";
+    }
+    else
+    {
+        oStatus = "Inativo";
+    }
+
+    CultureInfo cult = new CultureInfo("pt-BR");
+    DateTime dataCriacao = new DateTime(ViewBag.operador.dataCriacao);
+    DateTime dataNascimento = new DateTime(ViewBag.operador.dataNascimento);
+
+    string dataCri = dataCriacao.ToString("dd/MM/yyyy", cult);
+    string dataNasc = dataNascimento.ToString("dd/MM/yyyy", cult);
+
+}
+
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">Informações do operador @ViewBag.operador.nome <label class="pull-right">ID #@ViewBag.operador.idOperador</label></h4>
+</div>
+
+<div class="modal-body">
+    <center><label>Status: @oStatus</label></center>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_pessoal" data-toggle="tab">Pessoal</a></li>
+            <li><a href="#tab_contato" data-toggle="tab">Contato</a></li>
+            <li><a href="#tab_endereco" data-toggle="tab">Endereço</a></li>
+            <li><a href="#tab_adm" data-toggle="tab">Administrativas</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_pessoal">
+                <p>Nome: @ViewBag.operador.nome @ViewBag.operador.sobrenome</p>
+                <p>CPF: @ViewBag.operador.cpf</p>
+                <p>Data de nascimento: @dataNasc</p>
+            </div>
+            <div class="tab-pane" id="tab_contato">
+                <p>Telefone: @ViewBag.operador.telefone</p>
+                <p>Celular: @ViewBag.operador.celular</p>
+                <p>Email: @ViewBag.operador.email</p>
+            </div>
+            <div class="tab-pane" id="tab_endereco">
+                <p>Rua: @ViewBag.operador.endereco.rua</p>
+                <p>Número: @ViewBag.operador.endereco.numero</p>
+                <p>Bairro: @ViewBag.operador.endereco.bairro</p>
+                <p>Cidade: @ViewBag.operador.endereco.cidade</p>
+                <p>CEP: @ViewBag.operador.endereco.cep</p>
+            </div>
+            <div class="tab-pane" id="tab_adm">
+                <p>Login: @ViewBag.operador.login</p>
+                <p>Nível: @NivelOp</p>
+                <p>Data da criação: @dataCri</p>
+                <p><b>Operador criador</b></p>
+                <p>ID: @ViewBag.operador.operadorCriador</p>
+                <p>Nome: </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Fechar</button>
+</div>

@@ -1,0 +1,67 @@
+﻿@using PagedList
+@using PagedList.Mvc;
+@using AlugueService.Models
+
+
+@{
+    ViewBag.Title = "Pré-aluguel";
+    ViewBag.Subtitle = "Consulta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-11">
+        <div class="box">
+            <div class="box-header">
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table class="table table-bordered table-hover" id="table_prealuguel">
+                    <thead>
+                        <tr>
+                            <th style="width:60px;"><center>ID</center></th>
+                            <th><center>Nome cliente</center></th>
+                            <th><center>Valor</center></th>
+                            <th><center>Data prevista</center></th>
+                            <th style="width:80px;"><center>Configuração</center></th>
+                            <th style="width:80px;"><center>Operador</center></th>
+                            <th style="width:80px;"><center>Status</center></th>
+                            <th style="width:80px;"><center></center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.lista)
+                        {
+                            if (item.statusPreAluguel == 1)
+                            {
+                                <tr class="success">
+                                    <td><center>@item.idPreAluguel</center></td>
+                                    <td><center>@item.cliente.nome</center></td>
+                                    <td><center>@item.valorAluguel</center></td>
+                                    <td><center>@item.dataPrevista</center></td>
+                                    <td><center>@item.configuracao.idConfiguracao</center></td>
+                                    <td><center>@item.operadorCriador</center></td>
+                                    <td><center>Ativo</center></td>
+                                    <td><center>@Html.ActionLink(" ", "Modal", new { id = item.idPreAluguel }, new { @class = "fa fa-info", data_modal = "", @title = "Informações" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink(" ", "Editar", new { id = item.idPreAluguel }, new { @class = "fa fa-pencil-square-o", @title = "Editar" })</center></td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+</div>
+

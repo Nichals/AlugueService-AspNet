@@ -1,0 +1,129 @@
+﻿@model AlugueService.Models.Produto
+
+@{
+    ViewBag.Title = "Produto";
+    ViewBag.Subtitle = "Cadastro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> listTamanho = new List<SelectListItem>();
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "PP",
+        Value = "PP"
+    });
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "P",
+        Value = "P",
+    });
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "M",
+        Value = "M"
+    });
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "G",
+        Value = "G",
+    });
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "GG",
+        Value = "GG"
+    });
+    listTamanho.Add(new SelectListItem
+    {
+        Text = "ÚNICO",
+        Value = "UNICO",
+    });
+
+    List<SelectListItem> listGenero = new List<SelectListItem>();
+    listGenero.Add(new SelectListItem
+    {
+        Text = "M",
+        Value = "M"
+    });
+    listGenero.Add(new SelectListItem
+    {
+        Text = "F",
+        Value = "F",
+    });
+    listGenero.Add(new SelectListItem
+    {
+        Text = "U",
+        Value = "U"
+    });
+
+}
+
+
+<!-- Main content -->
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-11">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <div class="col-xs-5">
+                        <div class="form-group">
+                            @Html.Label("Nome:")
+                            @Html.TextBoxFor(m => m.nome, new { @class = "form-control", id = "inputNome", maxlength = "30", minlenght = "2", required = "required", pattern = @"^([A-zÀ-ú]+(_[A-zÀ-ú]+)*)(\s([A-zÀ-ú]+(_[A-zÀ-ú]+)*))*$", @title = "Nome do produto de 2 à 30 caracteres, não são aceitos números e caracteres especiais", @Value = "Produto" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Tamanho:")
+                                    @Html.DropDownListFor(m => m.tamanho, listTamanho, "Selecione", new { @class = "form-control", id = "inputTamanho", required = "required", @Value = "M" })
+                                </div>
+                                <!-- /input-group -->
+                            </div>
+                            <!-- /.col-lg-6 -->
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Gênero:")
+                                    @Html.DropDownListFor(m => m.genero, listGenero, "Selecione", new { @class = "form-control", id = "inputGenero", required = "required", @Value = "M" })
+                                </div>
+                                <!-- /input-group -->
+                            </div>
+                            <!-- /.col-lg-6 -->
+                        </div>
+                        <!-- /.row -->
+
+
+                        <div class="input-group col-xs-12">
+                            @Html.Label("Preço:")
+                            <div class="input-group">
+                                <div class="input-group-addon">R$</div>
+                                @*<input type="text" class="form-control" id="inputPreco" required maxlength="10" style="float:left">*@
+                                @Html.TextBoxFor(m => m.valor, new { @class = "form-control", id = "inputPreco", type = "text", maxlength = "10", required = "required", @Value = "100" })
+                            </div>
+                        </div>
+
+                        @*Input para imagem (retirado)*@
+                        @*<div class="form-group" style="float:left">
+                                <label>
+                                    <input type="checkbox" style="float:left" onclick="var input = document.getElementById('inputFile'); if (this.checked) { input.disabled = false; input.focus(); } else { input.disabled = true; }" /> Produto tem imagem?
+                                </label>
+                                <input type="file" id="inputFile" name="inputFile" accept="image/*" disabled="disabled">
+                                <p class="help-block">Somente uma imagem por produto</p>
+                            </div>*@
+
+                    </div>
+                    <div class="form-group col-xs-7">
+                        @Html.Label("Descrição:")
+                        @Html.TextAreaFor(m => m.descricao, new { @class ="form-control", id= "inputDescricao", cols="40", rows="5", maxlength="1000", style= "height:180px;resize:none;float:right", placeholder = "Campo de preenchimento não obrigatório" })
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Cadastrar e gerar etiqueta&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-save"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

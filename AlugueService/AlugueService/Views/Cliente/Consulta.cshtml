@@ -1,0 +1,84 @@
+﻿@using PagedList
+@using PagedList.Mvc;
+@using AlugueService.Models
+@using AlugueService.Util
+
+@{
+    ViewBag.Title = "Cliente";
+    ViewBag.Subtitle = "Consulta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Utilitaria util = new Utilitaria();
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-11">
+        <div class="box">
+            <div class="box-header">
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table class="table table-bordered table-hover" id="table_cliente">
+                    <thead>
+                        <tr>
+                            <th style="width:60px;"><center>ID</center></th>
+                            <th><center>Nome</center></th>
+                            <th><center>Sobrenome</center></th>
+                            <th><center>CPF</center></th>
+                            <th style="width:80px;"><center>Status</center></th>
+                            <th style="width:80px;"><center></center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.lista)
+                        {
+                            if (item.status == 0)
+                            {
+                                <tr class="danger">
+                                    <td><center>@item.idCliente</center></td>
+
+                                    @{
+                                        item.nome = util.DesnormalizarString(item.nome);
+                                    }
+
+                                    <td><center>@item.nome</center></td>
+                                    <td><center>@item.sobrenome</center></td>
+                                    <td><center>@item.cpf</center></td>
+                                    <td><center>Inativo</center></td>
+                                    <td><center>@Html.ActionLink(" ", "Modal", new { id = item.idCliente }, new { @class = "fa fa-info", data_modal = "", @title = "Informações" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink(" ", "Editar", new { id = item.idCliente }, new { @class = "fa fa-pencil-square-o", @title = "Editar" })</center></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr class="success">
+                                    <td><center>@item.idCliente</center></td>
+                                    
+                                    @{
+                                        item.nome = util.DesnormalizarString(item.nome);
+                                    }
+
+                                    <td><center>@item.nome</center></td>
+                                    <td><center>@item.sobrenome</center></td>
+                                    <td><center>@item.cpf</center></td>
+                                    <td><center>Ativo</center></td>
+                                    <td><center>@Html.ActionLink(" ", "Modal", new { id = item.idCliente }, new { @class = "fa fa-info", data_modal = "", @title = "Informações" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink(" ", "Editar", new { id = item.idCliente }, new { @class = "fa fa-pencil-square-o", @title = "Editar" })</center></td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+</div>

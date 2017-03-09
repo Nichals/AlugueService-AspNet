@@ -1,0 +1,69 @@
+﻿@model AlugueService.Models.Produto
+@using System.Globalization
+@{ 
+    var valorFormatado = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", ViewBag.produto.valor);
+
+    string pStatus;
+    if (ViewBag.produto.status == 1)
+    {
+        pStatus = "Ativo";
+    }
+    else if (ViewBag.produto.status == 2)
+    {
+        pStatus = "Alugado";
+    }
+    else if (ViewBag.produto.status == 3)
+    {
+        pStatus = "Pré-alugado";
+    }
+    else if (ViewBag.produto.status == 4)
+    {
+        pStatus = "Manutenção";
+    }
+    else if (ViewBag.produto.status == 5)
+    {
+        pStatus = "Lavagem";
+    }
+    else
+    {
+        pStatus = "Inativo";
+    }
+
+    CultureInfo cult = new CultureInfo("pt-BR");
+    DateTime dataCriacao = new DateTime(ViewBag.produto.dataCriacao);
+    string dataCri = dataCriacao.ToString("dd/MM/yyyy", cult);
+
+}
+
+
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">Informações do produto @ViewBag.produto.nome <label class="pull-right">ID #@ViewBag.produto.idProduto</label></h4>
+</div>
+
+<div class="modal-body">
+    <center><label>Status: @pStatus</label></center>
+
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_geral" data-toggle="tab">Geral</a></li>
+            <li><a href="#tab_adm" data-toggle="tab">Administrativas</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_geral">
+                <p>Valor: @valorFormatado</p>
+                <p>Tamanho: @ViewBag.produto.tamanho</p>
+                <p>Gênero: @ViewBag.produto.genero</p>
+                <p>Descrição: @ViewBag.produto.descricao</p>
+            </div>
+            <div class="tab-pane" id="tab_adm">
+                <p>Quantidade de alugueis: @ViewBag.produto.quantidadeAluguel</p>
+                <p>Data criação: @dataCri</p>
+                <p>ID do operador criador: @ViewBag.produto.operadorCriador</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-info center-block" data-dismiss="modal">Fechar</button>
+</div>

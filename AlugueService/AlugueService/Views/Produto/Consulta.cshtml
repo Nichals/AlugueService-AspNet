@@ -1,0 +1,135 @@
+﻿@using PagedList
+@using PagedList.Mvc;
+@using AlugueService.Models
+@using System.Globalization
+
+@{
+    ViewBag.Title = "Produto";
+    ViewBag.Subtitle = "Consultar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-11">
+        <div class="box">
+            <div class="box-header">
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table class="table table-bordered table-hover" id="table_produto">
+                    <thead>
+                        <tr>
+                            <th style="width:60px;"><center>ID</center></th>
+                            <th><center>Nome</center></th>
+                            <th style="width:80px;"><center>Tamanho</center></th>
+                            <th style="width:80px;"><center>Genero</center></th>
+                            <th style="width:200px;"><center>Valor</center></th>
+                            <th style="width:100px;"><center>Status</center></th>
+                            <th style="width:80px;"><center> </center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.lista)
+                        {
+                                var valorFormatado = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", item.valor);
+                                if (item.status == 0)
+                                {
+                                <tr class="danger">
+                                    <td><center>@item.idProduto</center></td>
+                                    <td><center>@item.nome</center></td>
+                                    <td><center>@item.tamanho</center></td>
+                                    <td><center>@item.genero</center></td>
+                                    <td><center>@valorFormatado</center></td>
+                                    <td><center>Inativo</center></td>
+                                    <td><center>@Html.ActionLink(" ", "Modal", new { id = item.idProduto }, new { @class = "fa fa-info", data_modal = "", @title = "Informações" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink(" ", "Editar", new { id = item.idProduto, status = item.status }, new { @class = "fa fa-pencil-square-o", @title = "Editar" })</center></td>
+                                </tr>
+                            }
+                            else if (item.status == 2)
+                            {
+                                <tr class="bg-info">
+                                    <td><center>@item.idProduto</center></td>
+                                    <td><center>@item.nome</center></td>
+                                    <td><center>@item.tamanho</center></td>
+                                    <td><center>@item.genero</center></td>
+                                    <td><center>@valorFormatado</center></td>
+                                    <td><center>Alugado</center></td>
+                                    <td><center>@Html.ActionLink(" ", "Modal", new { id = item.idProduto }, new { @class = "fa fa-info", data_modal = "", @title = "Informações" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink(" ", "Editar", new { id = item.idProduto, status = item.status }, new { @class = "fa fa-pencil-square-o", @title = "Editar" })</center></td>
+                                </tr>
+                            }
+                            else if (item.status == 3)
+                            {
+                                <tr class="bg-gray-light">
+                                    <td><center>@item.idProduto</center></td>
+                                    <td><center>@item.nome</center></td>
+                                    <td><center>@item.tamanho</center></td>
+                                    <td><center>@item.genero</center></td>
+                                    <td><center>@valorFormatado</center></td>
+                                    <td><center>Pré-alugado</center></td>
+                                    <td><center>@Html.ActionLink(" ", "Modal", new { id = item.idProduto }, new { @class = "fa fa-info", data_modal = "", @title = "Informações" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink(" ", "Editar", new { id = item.idProduto, status = item.status }, new { @class = "fa fa-pencil-square-o", @title = "Editar" })</center></td>
+                                </tr>
+                            }
+                            else if (item.status == 4)
+                            {
+                                <tr class="bg-gray-light">
+                                    <td><center>@item.idProduto</center></td>
+                                    <td><center>@item.nome</center></td>
+                                    <td><center>@item.tamanho</center></td>
+                                    <td><center>@item.genero</center></td>
+                                    <td><center>@valorFormatado</center></td>
+                                    <td><center>Manutenção</center></td>
+                                    <td><center>@Html.ActionLink(" ", "Modal", new { id = item.idProduto }, new { @class = "fa fa-info", data_modal = "", @title = "Informações" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink(" ", "Editar", new { id = item.idProduto, status = item.status }, new { @class = "fa fa-pencil-square-o", @title = "Editar" })</center></td>
+                                </tr>
+                            }
+                            else if (item.status == 5)
+                            {
+                                <tr class="bg-gray-light">
+                                    <td><center>@item.idProduto</center></td>
+                                    <td><center>@item.nome</center></td>
+                                    <td><center>@item.tamanho</center></td>
+                                    <td><center>@item.genero</center></td>
+                                    <td><center>@valorFormatado</center></td>
+                                    <td><center>Lavagem</center></td>
+                                    <td><center>@Html.ActionLink(" ", "Modal", new { id = item.idProduto }, new { @class = "fa fa-info", data_modal = "", @title = "Informações" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink(" ", "Editar", new { id = item.idProduto, status = item.status }, new { @class = "fa fa-pencil-square-o", @title = "Editar" })</center></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr class="success">
+                                    <td><center>@item.idProduto</center></td>
+                                    <td><center>@item.nome</center></td>
+                                    <td><center>@item.tamanho</center></td>
+                                    <td><center>@item.genero</center></td>
+                                    <td><center>@valorFormatado</center></td>
+                                    <td><center>Ativo</center></td>
+                                    <td><center>@Html.ActionLink(" ", "Modal", new { id = item.idProduto }, new { @class = "fa fa-info", data_modal = "", @title = "Informações" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink(" ", "Editar", new { id = item.idProduto, status = item.status }, new { @class = "fa fa-pencil-square-o", @title = "Editar" })</center></td>
+                                </tr>
+                            }
+
+
+
+                        }
+                    </tbody>
+                </table>
+                @*@Html.PagedListPager((IPagedList)ViewBag.lista, pagina => Url.Action("Consulta", new { pagina, filtro = ViewBag.pesquisa }), PagedListRenderOptions.OnlyShowFivePagesAtATime)*@
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+</div>
+
+<script type="text/javascript">
+    var message = '@message';
+    if(message)
+        alert(message);
+</script>

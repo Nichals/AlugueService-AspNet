@@ -1,0 +1,92 @@
+﻿@using System.Globalization
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int Etiqueta = @ViewBag.Etiqueta;
+    string Qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + Etiqueta;
+}
+
+
+<style>
+    .etiqueta {
+        width: 300px;
+        height: 350px;
+        border: 2px solid black;
+        padding: 15px;
+        margin: 15px;
+        background: white;
+    }
+</style>
+
+<script language="javascript">
+    function PrintElem(printpage) {
+        var mywindow = window.open('', 'PRINT', 'height=350,width=300');
+        var newWin = window.frames["printf"];
+
+
+        mywindow.document.write('<html><head><title>' + document.title + '</title>');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(document.getElementById(printpage).innerHTML);
+        mywindow.document.write('</body></html>');
+
+
+        mywindow.document.close(); // necessary for IE >= 10
+        newWin.document.close();
+
+        mywindow.focus(); // necessary for IE >= 10*/
+        newWin.focus();
+        
+        newWin.print();
+        mywindow.print();
+
+        newWin.close();
+        mywindow.close();
+
+        return true;
+
+    }
+
+</script>
+
+
+<div class="row">
+    <div class="col-md-11">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <i class="fa fa-bullhorn"></i>
+                <h3 class="box-title">Informação</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="callout callout-success">
+                    <h4>Sucesso!</h4>
+
+                    <p>@ViewBag.Mensagem</p>
+                </div>
+                @{
+                    var valorFormatado = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", ViewBag.Produto.valor);
+                }
+
+                <center><div id="div_print">
+                    <div class="etiqueta">
+                        <center>
+                            <p /><IFRAME id="printf" name="printf" src="@Qrcode" width="200" height="200" scrolling="no" frameborder="0" align="middle"></IFRAME>
+                            <p />CODIGO: @ViewBag.Produto.idProduto<br />
+                        </center>
+                        Nome: @ViewBag.Produto.nome <br />
+                        Valor: @valorFormatado &nbsp;&nbsp; Tamanho: @ViewBag.Produto.tamanho
+                    </div>
+                </div>
+                <input name="b_print" type="button" class="ipt" onClick="PrintElem('div_print');" value=" Imprimir ">
+                </center>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<!-- END ALERTS AND CALLOUTS -->
+@*http://stackoverflow.com/questions/2255291/print-the-contents-of-a-div
+    http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only*@

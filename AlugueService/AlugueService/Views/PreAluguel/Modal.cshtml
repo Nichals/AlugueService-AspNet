@@ -1,0 +1,90 @@
+﻿@model AlugueService.Models.PreAluguel
+@using System.Globalization;
+
+@{
+
+    string Status;
+    if (ViewBag.preAluguel.statusPreAluguel == 1)
+    {
+        Status = "Ativo";
+    }
+    else
+    {
+        Status = "Inativo";
+    }
+
+    CultureInfo cult = new CultureInfo("pt-BR");
+    DateTime dataPrevista = new DateTime(ViewBag.preAluguel.dataPrevista);
+    DateTime dataNascimento = new DateTime(ViewBag.preAluguel.cliente.dataNascimento);
+
+    string dataPre = dataPrevista.ToString("dd/MM/yyyy", cult);
+    string dataNasc = dataNascimento.ToString("dd/MM/yyyy", cult);
+
+}
+
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">Informações do pré-aluguel<label class="pull-right">ID #@ViewBag.preAluguel.idPreAluguel</label></h4>
+</div>
+
+<div class="modal-body">
+    <center><label>Status: @Status</label></center>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_geral" data-toggle="tab">Geral</a></li>
+            <li><a href="#tab_produtos" data-toggle="tab">Produtos</a></li>
+            <li><a href="#tab_adm" data-toggle="tab">Administrativas</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_geral">
+                <p>Nome do cliente: @ViewBag.preAluguel.cliente.nome </p>
+                <p>CPF: @ViewBag.preAluguel.cliente.cpf</p>
+                <p>Data de nascimento: @dataNasc</p>
+                <hr />
+                <p>Valor do pré-aluguel: @ViewBag.preAluguel.valorAluguel </p>
+            </div>
+            <div class="tab-pane" id="tab_produtos">
+                <p>Lista de produtos do pre-aluguel</p>
+
+                <table class="table table-bordered table-hover" id="table_prealuguel">
+                    <thead>
+                        <tr>
+                            <th style="width:60px;"><center>ID</center></th>
+                            <th><center>Nome</center></th>
+                            <th><center>Valor</center></th>
+                            <th><center>Tamanho</center></th>
+                            <th><center>Genero</center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.preAluguel.listaProdutos)
+                        {
+                            <tr>
+                                <td><center>@item.idProduto</center></td>
+                                <td><center>@item.nome</center></td>
+                                <td><center>@item.valor</center></td>
+                                <td><center>@item.tamanho</center></td>
+                                <td><center>@item.genero</center></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="tab-pane" id="tab_adm">
+                <p>Operador criador: @ViewBag.preAluguel.operadorCriador</p>
+                <hr />
+                <p>Configuração</p>
+                <p>ID: @ViewBag.preAluguel.configuracao.idConfiguracao</p>
+                <p>Valor multa: @ViewBag.preAluguel.configuracao.cupom</p>
+                <p>Valor cupom: @ViewBag.preAluguel.configuracao.multa</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Fechar</button>
+</div>
